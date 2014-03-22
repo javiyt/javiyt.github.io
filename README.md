@@ -1,4 +1,2 @@
-methblog.github.com
+javiyt.github.io
 ===================
-
-Archivos del blog que iré creando poco a poco
