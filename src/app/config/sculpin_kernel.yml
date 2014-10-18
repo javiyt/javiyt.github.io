@@ -1,0 +1,17 @@
+sculpin_content_types:
+    posts:
+        permalink: blog/:year/:month/:day/:filename/
+    projects:
+        permalink: projects/:filename
+        type: path
+        path: _projects
+        singular_name: project
+        layout: default
+        enabled: true
+    slides:
+        permalink: slides/:filename
+        type: path
+        path: _slides
+        singular_name: slides
+        layout: default
+        enabled: true
