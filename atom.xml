@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Sculpin Blog Skeleton]]></title>
+    <link href="/atom.xml" rel="self"/>
+    <link href="/"/>
+    <updated>2014-10-18T09:53:18+02:00</updated>
+    <id>/</id>
+        <generator uri="http://sculpin.io/">Sculpin</generator>
+            <entry>
+            <title type="html"><![CDATA[Hello World!]]></title>
+            <link href="/blog/2014/10/18/hello-world"/>
+            <updated>2014-10-18T00:00:00+02:00</updated>
+            <id>/blog/2014/10/18/hello-world</id>
+            <content type="html"><![CDATA[<p>Hi all! This is my first blog post, here you can find information about me, my projects, slides, etc...</p>
+]]></content>
+        </entry>
+    </feed>
