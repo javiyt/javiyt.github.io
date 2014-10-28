@@ -1,4 +1,0 @@
----
-use: [projects]
----
-Android projects
