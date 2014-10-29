@@ -1,3 +1,3 @@
 #!/bin/bash
 WHERE_JEKYLL="$(which jekyll)"
-`${WHERE_JEKYLL} server --watch -P 8124 -s /vagrant`
+`${WHERE_JEKYLL} server --watch -P 8124 --force_polling -s /vagrant >> /dev/null &`
