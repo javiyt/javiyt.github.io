@@ -1,9 +1,10 @@
 ---
 title: Introduction to PHPSpec
-description: Start moving from TDD to BDD (Draft)
+description: Start moving from TDD to BDD
 reveal:
-  theme: moon
-  progress: false
+  theme: solarized
+  progress: true
+  history: true
 ---
 
 <section>
@@ -27,8 +28,260 @@ reveal:
 <section>
   <h2>What’s PHPSpec</h2>
   <ul>
-    <li class="fragment">BDD Framework</li>
-    <li class="fragment">DSL based on RSpec</li>
-    <li class="fragment">Created by Pádraic Brady</li>
+    <li>BDD Framework</li>
+    <li>DSL based on RSpec</li>
+    <li>Created by Pádraic Brady</li>
   </ul>
+</section>
+
+<section>
+  <h2>What offers me PHPSpec?</h2>
+  <ul>
+    <li>Code generation</li>
+    <li>$this</li>
+    <li>Natural language matchers</li>
+    <li>Mocks/Stubs</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers</h2>
+  <p>
+    method()->should…(Be, Return, Equal)
+  </p>
+  <p>
+    method()->shouldNot…(Be, Return, Equal)
+  </p>
+</section>
+
+<section>
+  <h2>Matchers</h2>
+    <pre>
+      <code class="language-php" data-lang="php">
+        class HelloWorldSpec extends ObjectBehavior
+        {
+          public function it_should_say_hello()
+          {
+            $this->helloWorld()->shouldBeEqualTo('Hello World!');
+          }
+        }
+      </code>
+    </pre>
+</section>
+
+<section>
+  <h2>Matchers: Identity</h2>
+  <ul>
+    <li>shouldReturn</li>
+    <li>shouldBe</li>
+    <li>shouldBeEqualTo</li>
+    <li>shouldEqual</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Comparison</h2>
+  <ul>
+    <li>shouldBeLike</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Exceptions</h2>
+  <ul>
+    <li>shouldThrow()->during('method_name')</li>
+    <li>shouldThrow()->duringMethodName()</li>
+    <li>fail()</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Type</h2>
+  <ul>
+    <li>shouldBeAnInstanceOf</li>
+    <li>haveType</li>
+    <li>returnAnInstanceOf</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Count</h2>
+  <ul>
+    <li>shouldHaveCount</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Scalar</h2>
+  <ul>
+    <li>shouldBeString</li>
+    <li>shouldBeArray</li>
+    <li>shouldBeBoolean</li>
+    <li>shouldBeInteger</li>
+    <li>shouldBeDecimal</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Matchers: Object State</h2>
+    <pre>
+      <code class="language-php" data-lang="php">
+        namespace Spec;
+
+        use PhPSpec\ObjectBehavior;
+
+        class ObjectStateSpec extends ObjectBehavior
+        {
+          public function it_should_has_a_valid_state()
+          {
+            $this->shouldBeAValidState();
+          }
+        }
+      </code>
+    </pre>
+    <pre>
+      <code class="language-php" data-lang="php">
+        class ObjectState
+        {
+          public function isAValidState()
+          {
+            return true;
+          }
+        }
+      </code>
+    </pre>
+</section>
+
+<section>
+  <h2>Matchers: Custom Matchers</h2>
+    <pre>
+      <code class="language-php" data-lang="php">
+        class CustomMatcherSpec extends ObjectBehavior
+        {
+          public function it_should_say_hello()
+          {
+            $this->helloWorld()->shouldSayHello();
+          }
+
+          public function getMatchers()
+          {
+            return array(
+              'sayHello'  => function($actual) {
+                return $actual == 'Hello World!';
+              }
+            );
+          }
+        }
+      </code>
+    </pre>
+</section>
+
+<section>
+  <h2>More methods...</h2>
+  <ul>
+    <li>
+      let
+      <ul>
+        <li>beConstructedWith</li>
+      </ul>
+    </li>
+    <li>letGo</li>
+    <li>it</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Stubs</h2>
+    <pre>
+      <code class="language-php" data-lang="php">
+        class HelloWorldStubsSpec extends ObjectBehavior
+        {
+          public function it_should_say_hello(Greeter $greeter)
+          {
+            $greeter->sayHello()->willReturn('');
+
+            $this->helloWorld($greeter)->shouldSayHello();
+          }
+        }
+      </code>
+    </pre>
+</section>
+
+<section>
+  <h2>Mocks</h2>
+    <pre>
+      <code class="language-php" data-lang="php">
+        class HelloWorldMockSpec extends ObjectBehavior
+        {
+          public function it_should_say_hello(Greeter $greeter)
+          {
+            $greeter->sayHello()->shouldBeCalled();
+
+            $this->helloWorld($greeter)->shouldSayHello();
+          }
+        }
+      </code>
+    </pre>
+</section>
+
+<section>
+  <h2>Templates</h2>
+  <ul>
+    <li>
+      Location:
+      <ul>
+        <li>{project}/.phpspec/{template}.tpl</li>
+        <li>{home}/.phpspec/{template}.tpl</li>
+      </ul>
+    </li>
+    <li>
+      Types:
+      <ul>
+        <li>specification</li>
+        <li>class</li>
+        <li>method</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Templates: Variables</h2>
+  <ul>
+    <li>
+      specification:
+      <ul>
+        <li>%filepath%</li>
+        <li>%name%</li>
+        <li>%namespace%</li>
+        <li>%subject%</li>
+      </ul>
+    </li>
+    <li>
+      class:
+      <ul>
+        <li>%filepath%</li>
+        <li>%name%</li>
+        <li>%namespace%</li>
+        <li>%namespace_block%</li>
+      </ul>
+    </li>
+    <li>
+      method:
+      <ul>
+        <li>%name%</li>
+        <li>%arguments%</li>
+      </ul>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <h2>Reference</h2>
+  <p>
+    <a href="http://www.phpspec.net" target="_blank">www.phpspec.net</a>
+  </p>
+  <p>
+    <a href="http://code.tutsplus.com/tutorials/getting-started-with-phpspec--cms-20919" target="_blank">code.tutsplus.com/tutorials/getting-started-with-phpspec--cms-20919</a>
+  </p>
 </section>
