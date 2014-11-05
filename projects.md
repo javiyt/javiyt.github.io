@@ -37,7 +37,7 @@ All the javascript code used by [HipHop-Producciones.net](http://www.hiphop-prod
 [VMJsTests](https://github.com/javiyt/vmjstests)
 Environment created using Puppet + Vagrant which should be used to test javascript code using jsTestDriver and Karma without the pain of configuring the whole environment to test your javascript code
 
-[Workshop NodeJS for PHP Developers](https://bitbucket.org/meth/workshop_nodejs)
+[Workshop NodeJS for PHP Developers](https://bitbucket.org/javiyt/workshop_nodejs)
 Workshop given to PHP developers that were interested in learning node.js
 
 ## Puppet/Vagrant projects
@@ -50,5 +50,5 @@ Machine used to compile packages for Debian Wheezy and then can be installed on 
 [Puppet ISPConfig](https://github.com/javiyt/puppet-ispconfig)
 Install ISPConfig 3 using Puppet easily, it configures a machine with Nginx, MySQL, PHP5 and ISPConfig 3 in less than 10 minutes.
 
-[Workshop Vagrant + Puppet](https://bitbucket.org/meth/workshop_puppetvagrant)
+[Workshop Vagrant + Puppet](https://bitbucket.org/javiyt/workshop_puppetvagrant)
 Learn how to deal with Puppet using Vagrant step by step, workshop given many times.
