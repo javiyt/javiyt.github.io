@@ -1,0 +1,180 @@
+---
+title: Ning + PHP-FPM + HHVM
+description: The workshop you were waiting for (Draft)
+reveal:
+  theme: solarized
+  progress: true
+  history: true
+---
+<section>
+    <h1>Nginx + PHP-FPM + HHWM</h1>
+    <h3>What the heck are you talking about?</h3>
+    <h4>The workshop you were waiting for</h4>
+    <p>
+        <small>Created by <a href="http://javi.yt">Javi M.</a> / <a href="http://twitter.com/javiyt">@javiyt</a></small>
+    </p>
+</section>
+
+<section>
+    <section>
+        <h2>What's nginx?</h2>
+        <p>
+            <ul>
+                <li>Web server</li>
+                <li>Reverse proxy</li>
+                <li>mail proxy server</li>
+                <li>High performance</li>
+            </ul>
+        </p>
+        <p>
+            <img src="http://i.imgur.com/mGbXP66.png">
+        </p>
+    </section>
+    <section>
+        <h2>What's nginx?</h2>
+        <h3>Features</h3>
+        <ul>
+            <li>Multiplatform</li>
+            <li>Serve static files</li>
+            <li>Reverse proxying with cache</li>
+            <li>Support for FastCGI, uwsgi, SCGI and memcached</li>
+            <li>Modular architecture</li>
+            <li>SSL and TLS support</li>
+            <li>Event driven architecture</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What's nginx?</h2>
+        <h3>Features</h3>
+        <ul>
+            <li>Fast configuration reloading</li>
+            <li>3xx-5xx error codes redirection</li>
+            <li>Rewrite module using regexp</li>
+            <li>HTTP referer validation</li>
+            <li>Embedded Perl</li>
+            <li>FLV and MP4 streaming</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What's nginx?</h2>
+        <h3>Who's using it?</h3>
+        <ul>
+            <li>Wordpress</li>
+            <li>Github</li>
+            <li>Facebook</li>
+            <li>Pinterest</li>
+            <li>Airbnb</li>
+            <li>Eventbrite</li>
+            <li>and many more</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What's nginx?</h2>
+        <h3>What modules are available?</h3>
+        <ul>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html">Limit Requests</a>: Limit frequency of requests from a client</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_memcached_module.html">Memcached</a>: Memcached support</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html">Rewrite</a>: Request rewriting using regular expressions</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_upstream_module.html">Upstream</a>: For load-balancing</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_image_filter_module.html">Image Filter</a>: Transform images with Libgd</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_random_index_module.html">Random Index</a>: Randomize directory indexes</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_spdy_module.html">SPDY</a>: SPDY support</li>
+            <li><a href="http://nginx.org/en/docs/http/ngx_http_sub_module.html">Substitution</a>: Replace text in pages</li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h2>First exercise</h2>
+        <h3>Install and basic configuration</h3>
+        <p>
+            Install nginx and check the basic configuration parameters
+        </p>
+        <pre>
+            <code data-trim>
+                sudo aptitude install nginx
+            </code>
+            <code>
+                user www-data;
+                worker_processes 4;
+                pid /run/nginx.pid;
+
+                events {
+                    worker_connections 768;
+                }
+
+                http {
+
+                    sendfile on;
+                    tcp_nopush on;
+                    tcp_nodelay on;
+                    keepalive_timeout 65;
+                    types_hash_max_size 2048;
+
+                    include /etc/nginx/mime.types;
+                    default_type application/octet-stream;
+
+                    access_log /var/log/nginx/access.log;
+                    error_log /var/log/nginx/error.log;
+
+                    gzip on;
+                    gzip_disable "msie6";
+
+                    include /etc/nginx/conf.d/*.conf;
+                    include /etc/nginx/sites-enabled/*;
+                }
+            </code>
+        </pre>
+    </section>
+
+    <section>
+        <h2>First exercise</h2>
+        <h3>Virtual host configuration</h3>
+        <p>
+            <ul>
+                <li>Create a virtual host pointing to /vagrant/www</li>
+                <li>Configure the vhost to serve only static files</li>
+                <li>Disable default host</li>
+                <li>Enable your host</li>
+                <li>Reload nginx configuration</li>
+            </ul>
+        </p>
+    </section>
+
+    <section>
+        <h2>First exercise</h2>
+        <h3>404 custom page</h3>
+        <p>
+            <ul>
+                <li>Create a 404 page under /vagrant/www</li>
+                <li>Configure the vhost to serve the 404 page</li>
+                <li>Reload nginx configuration</li>
+            </ul>
+        </p>
+    </section>
+
+    <section>
+        <h2>First exercise</h2>
+        <h3>Configuration by location</h3>
+        <p>
+            <ul>
+                <li>Create a folder called "aliastest" under /vagrant/www</li>
+                <li>Configure the vhost to serve the aliastest when accessing test folder</li>
+                <li>Reload nginx configuration</li>
+            </ul>
+        </p>
+    </section>
+</section>
+
+<section>
+    <section>
+        <h2>PHP-FPM</h2>
+        <h3>Lot of letters without meaning</h3>
+        <p>
+            <ul>
+                <li>PHP server daemon</li>
+            </ul>
+        </p>
+    </section>
+</section>
