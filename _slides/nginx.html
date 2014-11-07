@@ -129,7 +129,7 @@ reveal:
     </section>
 
     <section>
-        <h2>First exercise</h2>
+        <h2>Second exercise</h2>
         <h3>Virtual host configuration</h3>
         <p>
             <ul>
@@ -143,7 +143,7 @@ reveal:
     </section>
 
     <section>
-        <h2>First exercise</h2>
+        <h2>Third exercise</h2>
         <h3>404 custom page</h3>
         <p>
             <ul>
@@ -155,7 +155,7 @@ reveal:
     </section>
 
     <section>
-        <h2>First exercise</h2>
+        <h2>Fourth exercise</h2>
         <h3>Configuration by location</h3>
         <p>
             <ul>
@@ -173,8 +173,106 @@ reveal:
         <h3>Lot of letters without meaning</h3>
         <p>
             <ul>
+                <li>FPM: FastCGI Process Manager</li>
                 <li>PHP server daemon</li>
+                <li>Specific UID/GID</li>
+                <li>chroot</li>
+                <li>Control number of processes</li>
+                <li>Different PHP versions installed on same machine</li>
+                <li>Communication via sockets</li>
             </ul>
         </p>
+    </section>
+    <section>
+        <h2>PHP-FPM: Why?</h2>
+        <p>
+            <ul>
+                <li>Improve security</li>
+                <li>Scales easily</li>
+                <li>Runs on any webserver: nginx, lighttpd, cherokee, ...</li>
+                <li>Request can be cached on the webserver side</li>
+                <li>Each process has its own configuration</li>
+            </ul>
+        </p>
+    </section>
+    <section>
+        <h2>Fifth exercise</h2>
+        <h3>Installing PHP-FPM</h3>
+        <pre>
+            <code>
+                ;;;;;;;;;;;;;;;;;;;;;
+                ; FPM Configuration ;
+                ;;;;;;;;;;;;;;;;;;;;;
+
+                ;include=/etc/php5/fpm/*.conf
+
+                ;;;;;;;;;;;;;;;;;;
+                ; Global Options ;
+                ;;;;;;;;;;;;;;;;;;
+
+                [global]
+                pid = /var/run/php5-fpm.pid
+                error_log = /var/log/php5-fpm.log
+                syslog.facility = daemon
+                log_level = debug
+                process.max = 128
+
+                ;;;;;;;;;;;;;;;;;;;;
+                ; Pool Definitions ;
+                ;;;;;;;;;;;;;;;;;;;;
+                include=/etc/php5/fpm/pool.d/*.conf
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Sixth exercise</h2>
+        <h3>Configuring a pool</h3>
+        <pre>
+            <code>
+                [www]
+                user = www-data
+                group = www-data
+
+                listen = 127.0.0.1:9001
+                listen.allowed_clients = 127.0.0.1
+
+                pm = dynamic
+                pm.max_children = 5
+                pm.start_servers = 1
+                pm.min_spare_servers = 1
+                pm.max_spare_servers = 1
+                pm.process_idle_timeout = 10s;
+                pm.max_requests = 500
+
+                pm.status_path = /fpm-status
+
+                access.log = /var/log/php-fpm/$pool.access.log
+                slowlog = /var/log/php-fpm/$pool.log.slow
+
+                request_slowlog_timeout = 10s;
+
+                chroot = /vagrant/www/
+                chdir = /
+
+                catch_workers_output = yes
+
+                security.limit_extensions = .php
+
+                env[HOSTNAME] = $HOSTNAME
+                env[PATH] = /usr/local/bin:/usr/bin:/bin
+                env[TMP] = /tmp
+                env[TMPDIR] = /tmp
+                env[TEMP] = /tmp
+                env[PHP_ENVIRONMENT] = 'development'
+
+                php_flag[display_errors] = off
+                php_admin_value[memory_limit] = 32M
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Seventh exercise</h2>
+        <h3>Configuring nginx to use PHP</h3>
+
     </section>
 </section>
