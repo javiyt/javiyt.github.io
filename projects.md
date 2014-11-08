@@ -40,6 +40,9 @@ Environment created using Puppet + Vagrant which should be used to test javascri
 [Workshop NodeJS for PHP Developers](https://bitbucket.org/javiyt/workshop_nodejs)
 Workshop given to PHP developers that were interested in learning node.js
 
+[IPLookup](https://github.com/javiyt/iplookup)
+Simple API to lookup for the country where a IP belongs to, not ready to use in production
+
 ## Puppet/Vagrant projects
 [VagrantDemo](https://github.com/javiyt/vagrantdemo)
 Demo of different Vagrant + Puppet configurations, used only for tests, so newbies can start using Puppet easily.
