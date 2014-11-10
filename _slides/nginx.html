@@ -1,6 +1,6 @@
 ---
 title: Ning + PHP-FPM + HHVM
-description: The workshop you were waiting for (Draft)
+description: The workshop you were waiting for
 reveal:
   theme: solarized
   progress: true
@@ -462,6 +462,31 @@ reveal:
                     fastcgi_index  index.php;
                     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
                     include        fastcgi_params;
+                }
+            </code>
+        </pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Bonus Exercise</h2>
+        <h3>Image filter configuration</h3>
+        <ul>
+            <li>Configure a location to resize images on fly</li>
+            <li>The URL should be something like (width)/(height)/(image file)</li>
+            <li>Check <a href="http://nginx.org/en/docs/http/ngx_http_image_filter_module.html" target="_blank">image filter documentation</a> for more information</li>
+            <li>Image quality should be set to 75</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Bonus Exercise</h2>
+        <h3>Image filter configuration (Solution)</h3>
+        <pre>
+            <code>
+                location ~ img/(?<width>[0-9]+)/(?<height>[0-9]+)/(?<filename>.*) {
+                    alias /vagrant/www/$filename;
+                    image_filter resize $width $height;
+                    image_filter_jpeg_quality 75;
                 }
             </code>
         </pre>
