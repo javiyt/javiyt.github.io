@@ -174,12 +174,22 @@ reveal:
         <p>
             <ul>
                 <li>FPM: FastCGI Process Manager</li>
+                <li>Enhances FastCGI</li>
                 <li>PHP server daemon</li>
                 <li>Specific UID/GID</li>
+            </ul>
+        </p>
+    </section>
+    <section>
+        <h2>PHP-FPM</h2>
+        <h3>Lot of letters without meaning II</h3>
+        <p>
+            <ul>
                 <li>chroot</li>
                 <li>Control number of processes</li>
                 <li>Different PHP versions installed on same machine</li>
                 <li>Communication via sockets</li>
+                <li>Status checker</li>
             </ul>
         </p>
     </section>
@@ -195,6 +205,9 @@ reveal:
             </ul>
         </p>
     </section>
+</section>
+
+<section>
     <section>
         <h2>Fifth exercise</h2>
         <h3>Installing PHP-FPM</h3>
@@ -227,6 +240,22 @@ reveal:
     <section>
         <h2>Sixth exercise</h2>
         <h3>Configuring a pool</h3>
+        <ul>
+            <li>Edit /etc/php5/fpm/pool.d/www.conf</li>
+            <li>
+                Set configuration for the pool:
+                <ul>
+                    <li>to run on port 9001</li>
+                    <li>to allow access only for localhost</li>
+                    <li>chroot to /vagrant/www</li>
+                    <li>set some environment variables</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Sixth exercise</h2>
+        <h3>Configuring a pool (Solution)</h3>
         <pre>
             <code>
                 [www]
@@ -267,12 +296,174 @@ reveal:
 
                 php_flag[display_errors] = off
                 php_admin_value[memory_limit] = 32M
+                php_admin_value[error_log] = /var/log/php-fpm/$pool.error.log
+            </code>
+        </pre>
+        <pre>
+            <code data-trim>
+                /etc/init.d/php5-fpm restart
             </code>
         </pre>
     </section>
     <section>
         <h2>Seventh exercise</h2>
         <h3>Configuring nginx to use PHP</h3>
+        <ul>
+            <li>Edit vagrant host</li>
+            <li>Add the location to connect to the pool when accessing a PHP file</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Seventh exercise</h2>
+        <h3>Configuring nginx to use PHP (Solution)</h3>
+        <pre>
+            <code>
+                server {
+                    listen 80 default_server;
+                    listen [::]:80 default_server ipv6only=on;
 
+                    root /vagrant/www;
+                    index index.html index.htm index.php;
+                    error_page 404 /404.html;
+
+                    server_name localhost;
+
+                    location / {
+                        try_files $uri $uri/ =404;
+                    }
+
+                    location /test {
+                        alias /vagrant/www/aliastest/;
+                    }
+
+                    location ~* \.php$ {
+                        fastcgi_index   index.php;
+                        fastcgi_pass    127.0.0.1:9001;
+                        include /etc/nginx/fastcgi_params;
+                        fastcgi_param   SCRIPT_FILENAME    $fastcgi_script_name;
+                        fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+                    }
+                }
+            </code>
+        </pre>
+        <a href="http://localhost:8080/info.php" target="_blank">http://localhost:8080/info.php</a>
+    </section>
+    <section>
+        <h2>Eighth exercise</h2>
+        <h3>Configuring nginx to access PHP-FPM status page</h3>
+        <ul>
+            <li>Edit vagrant host</li>
+            <li>Add the location to connect to the status page of the desired pool</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Eighth exercise</h2>
+        <h3>Configuring nginx to access PHP-FPM status page (Solution)</h3>
+        <pre>
+            <code>
+                location ~ ^/fpm-status$ {
+                    access_log off;
+                    include /etc/nginx/fastcgi_params;
+                    fastcgi_pass 127.0.0.1:9001;
+                }
+            </code>
+        </pre>
+        <a href="http://localhost:8080/fpm-status" target="_blank">http://localhost:8080/fpm-status</a>
+    </section>
+    <section>
+        <h2>Ninth exercise</h2>
+        <h3>Configuring nginx to load balancing PHP-FPM</h3>
+        <ul>
+            <li>Create a pool identical to the one existing running on port 9002</li>
+            <li>Create an environment variable to identify the pools</li>
+            <li>Add <a href="http://wiki.nginx.org/HttpUpstreamModule" target="_blank">upstream</a> configuration to access two different pools</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Ninth exercise</h2>
+        <h3>Configuring nginx to load balancing PHP-FPM (Solution)</h3>
+        <pre>
+            <code>
+                upstream cluster_php {
+                    server 127.0.0.1:9001;
+                    server 127.0.0.1:9002;
+                }
+            </code>
+        </pre>
+        <pre>
+            <code>
+                location ~* \.php$ {
+                    try_files $uri =404;
+                    fastcgi_index   index.php;
+                    fastcgi_pass    cluster_php;
+                    include /etc/nginx/fastcgi_params;
+                    fastcgi_param   SCRIPT_FILENAME    $fastcgi_script_name;
+                    fastcgi_param   SCRIPT_NAME        $fastcgi_script_name;
+                }
+            </code>
+        </pre>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>HHVM</h2>
+        <h3>The virtual machine for PHP</h3>
+        <ul>
+            <li>Virtual machine based on JIT compilation</li>
+            <li>Run PHP 5.4+ or Hack code</li>
+            <li>Developed by Facebook</li>
+            <li>Can be use with FCGI-enabled webserver</li>
+        </ul>
+        <a href="http://hhvm.com/" target="_blank">http://hhvm.com/</a>
+    </section>
+    <section>
+        <h2>HHVM</h2>
+        <h3>HipHop features</h3>
+        <ul>
+            <li>Available for *nix systems (Linux/OS X) Windows support in development</li>
+            <li>Extension for major <a href="http://docs.hhvm.com/manual/en/refs.database.php" target="_blank">databases connection</a> available</li>
+            <li>Extensions can be written using PHP/C++ or both</li>
+        </ul>
+    </section>
+</section>
+<section>
+    <section>
+        <h2>Tenth exercise</h2>
+        <h3>Installing HHVM</h3>
+        Follow the instructions you can find on <a href="https://github.com/facebook/hhvm/wiki/Prebuilt-packages-on-Ubuntu-14.04" target="_blank">HHVM wiki page</a>
+        <pre>
+            <code>
+                wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
+                echo deb http://dl.hhvm.com/ubuntu trusty main | sudo tee /etc/apt/sources.list.d/hhvm.list
+                sudo apt-get update
+                sudo apt-get install hhvm
+                sudo /usr/share/hhvm/install_fastcgi.sh
+                sudo /etc/init.d/hhvm restart
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h2>Eleventh exercise</h2>
+        <h3>Configuring HHVM</h3>
+        <ul>
+            <li>Create a new folder hhvm in /vagrant/www</li>
+            <li>Add a PHP file inside it</li>
+            <li>Configure in your virtual host the access to that folder using the HHVM server</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Eleventh exercise</h2>
+        <h3>Configuring HHVM (Solution)</h3>
+        <pre>
+            <code>
+                location ~ hhvm/*\.(hh|php)$ {
+                    fastcgi_keep_conn on;
+                    fastcgi_pass   127.0.0.1:9000;
+                    fastcgi_index  index.php;
+                    fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                    include        fastcgi_params;
+                }
+            </code>
+        </pre>
     </section>
 </section>
