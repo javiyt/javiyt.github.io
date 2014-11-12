@@ -212,6 +212,11 @@ reveal:
         <h2>Fifth exercise</h2>
         <h3>Installing PHP-FPM</h3>
         <pre>
+            <code data-trim>
+                sudo aptitude install php5-fpm
+            </code>
+        </pre>
+        <pre>
             <code>
                 ;;;;;;;;;;;;;;;;;;;;;
                 ; FPM Configuration ;
@@ -300,8 +305,9 @@ reveal:
             </code>
         </pre>
         <pre>
-            <code data-trim>
+            <code>
                 /etc/init.d/php5-fpm restart
+                mkdir /var/log/php-fpm/
             </code>
         </pre>
     </section>
@@ -336,7 +342,7 @@ reveal:
                         alias /vagrant/www/aliastest/;
                     }
 
-                    location ~* \.php$ {
+                    location ~ php/.*\.php$ {
                         fastcgi_index   index.php;
                         fastcgi_pass    127.0.0.1:9001;
                         include /etc/nginx/fastcgi_params;
@@ -346,7 +352,7 @@ reveal:
                 }
             </code>
         </pre>
-        <a href="http://localhost:8080/info.php" target="_blank">http://localhost:8080/info.php</a>
+        <a href="http://localhost:8080/php/info.php" target="_blank">http://localhost:8080/php/info.php</a>
     </section>
     <section>
         <h2>Eighth exercise</h2>
@@ -392,7 +398,7 @@ reveal:
         </pre>
         <pre>
             <code>
-                location ~* \.php$ {
+                location ~ php/.*\.php$ {
                     try_files $uri =404;
                     fastcgi_index   index.php;
                     fastcgi_pass    cluster_php;
@@ -402,6 +408,7 @@ reveal:
                 }
             </code>
         </pre>
+        <a href="http://localhost:8080/php/info.php" target="_blank">http://localhost:8080/php/info.php</a>
     </section>
 </section>
 <section>
@@ -456,13 +463,20 @@ reveal:
         <h3>Configuring HHVM (Solution)</h3>
         <pre>
             <code>
-                location ~ hhvm/*\.(hh|php)$ {
+                location ~ hhvm/.*\.(hh|php)$ {
                     fastcgi_keep_conn on;
                     fastcgi_pass   127.0.0.1:9000;
                     fastcgi_index  index.php;
                     fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
                     include        fastcgi_params;
                 }
+            </code>
+        </pre>
+        <pre>
+            <code>
+                sudo /usr/share/hhvm/install_fastcgi.sh
+                sudo /etc/init.d/hhvm restart
+                sudo /etc/init.d/nginx restart
             </code>
         </pre>
     </section>
@@ -483,7 +497,7 @@ reveal:
         <h3>Image filter configuration (Solution)</h3>
         <pre>
             <code>
-                location ~ img/(?<width>[0-9]+)/(?<height>[0-9]+)/(?<filename>.*) {
+                location ~ img/(?&lt;width&gt;[0-9]+)/(?&lt;height&gt;[0-9]+)/(?&lt;filename&gt;.*) {
                     alias /vagrant/www/$filename;
                     image_filter resize $width $height;
                     image_filter_jpeg_quality 75;
