@@ -7,11 +7,14 @@ reveal:
   history: true
 ---
 <section>
-    <h1>Nginx + PHP-FPM + HHWM</h1>
+    <h1>Nginx + PHP-FPM + HHVM</h1>
     <h3>What the heck are you talking about?</h3>
     <h4>The workshop you were waiting for</h4>
     <p>
         <small>Created by <a href="http://javi.yt">Javi M.</a> / <a href="http://twitter.com/javiyt">@javiyt</a></small>
+    </p>
+    <p>
+      <small>Code can be found at: <a href="https://bitbucket.org/javiyt/workshop_nginx/" target="_blank">bitbucket.org/javiyt/workshop_nginx</a></small>
     </p>
 </section>
 
@@ -443,7 +446,7 @@ reveal:
                 wget -O - http://dl.hhvm.com/conf/hhvm.gpg.key | sudo apt-key add -
                 echo deb http://dl.hhvm.com/ubuntu trusty main | sudo tee /etc/apt/sources.list.d/hhvm.list
                 sudo apt-get update
-                sudo apt-get install hhvm
+                sudo apt-get -y install hhvm
                 sudo /usr/share/hhvm/install_fastcgi.sh
                 sudo /etc/init.d/hhvm restart
             </code>
