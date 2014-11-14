@@ -17,7 +17,7 @@ permalink: /projects/
 [HipHop-Producciones.net](http://www.hiphop-producciones.net)
 Personal project related to music, I started it June 2000, and it is still live, the main objective is to provide people a place to listen to amateur copyleft Hip Hop/Rap/RnB/Reggae music. It is build using PHP5.4.
 
-[CollegeFB](https://github.com/javiyt/collegefb)
+[CollegeFB](https://github.com/collegefb/collegefb)
 Package to install via composer. It is the core of a new project I'm working on, the idea is to create a database of College Football teams, so you can download the domain logic of the website.
 
 [YExtend](https://github.com/javiyt/YExtend)
