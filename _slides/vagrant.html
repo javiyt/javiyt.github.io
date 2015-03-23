@@ -1,0 +1,195 @@
+---
+title: Vagrant
+description: virtualizing your development
+reveal:
+  theme: solarized
+  progress: true
+  history: true
+---
+<section>
+    <h1>Vagrant</h1>
+    <h3>Virtualizing your development</h3>
+    <p>
+        <small>Created by <a href="http://javi.yt">Javi M.</a> / <a href="http://twitter.com/javiyt">@javiyt</a></small>
+    </p>
+</section>
+
+<section>
+    <h2>Agenda</h2>
+    <p>
+        <ul>
+            <li>Why virtualization?</li>
+            <li>What’s Vagrant?</li>
+            <li>Why use it? What does it require?</li>
+            <li>Terminology</li>
+            <li>The Vagrantfile</li>
+            <li>Demo</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Why virtualize environments?</h2>
+    <p>
+        <ul>
+            <li>Hard configuration of servers in Desktop</li>
+            <li>Keep different configurations</li>
+            <li>Everyone run the code in the same OS</li>
+            <li>Avoid software conflicts</li>
+            <li>Remove differences between environments</li>
+            <li>Test your code in different environments</li>
+            <li>Cheaper than hardware</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>What is vagrant?</h2>
+    <p>
+        <ul>
+            <li>Build portable VMs</li>
+            <li>On top of VirtualBox, VMWare, etc…</li>
+            <li>Headless mode</li>
+            <li>Automation (Chef, Puppet, ….)</li>
+            <li>Easy configuration</li>
+            <li>Automatic SSH access and shared folders</li>
+            <li>Build on Ruby by M. Hashimoto & J. Bender</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Ok, but why Vagrant?</h2>
+    <p>
+        <ul>
+            <li>Easy to use</li>
+            <li>Multi-platform tool</li>
+            <li>Configuration versioning</li>
+            <li>Open source tool (MIT License)</li>
+            <li>Share a VM with a few KBs file</li>
+            <li>Developers can test your app using Vagrant</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>I'm not sure it can be useful</h2>
+    <p>
+        <ul>
+            <li>vagrant up</li>
+            <li>Run multiple VMs</li>
+            <li>Can be extended via plugins</li>
+            <li>Complete command-line</li>
+            <li>GUI mode</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>What I need to use it?</h2>
+    <p>
+        <ul>
+            <li>Lastest version of Vagrant: <a href="http://downloads.vagrantup.com/" target="_blank">downloads.vagrantup.com</a></li>
+            <li>Lastest version of Virtualbox or other: <a href="https://www.virtualbox.org/wiki/Downloads" target="_blank">www.virtualbox.org/wiki/Downloads</a></li>
+            <li>Text editor</li>
+            <li>Git/SVN (recommended)</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Terminology</h2>
+    <p>
+        <ul>
+            <li>Vagrantfile</li>
+            <li>Box (precise64.box, ….)</li>
+            <li>Provider (VirtualBox, VMWare, ….)</li>
+            <li>Provisioner (Puppet, Chef, …)</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Useful Vagrant commands</h2>
+    <p>
+        <ul>
+            <li>$ vagrant init</li>
+            <li>$ vagrant up/halt</li>
+            <li>$ vagrant reload</li>
+            <li>$ vagrant suspend/resume</li>
+            <li>$ vagrant provision</li>
+            <li>$ vagrant destroy</li>
+            <li>$ vagrant ssh</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <img src="/images/slides_vagrant_vagrantfile.png" width="90%" height="90%">
+</section>
+
+<section>
+    <h2>The Vagrantfile</h2>
+    <p>
+        <ul>
+            <li>Hostname</li>
+            <li>Network</li>
+            <li>Shared folders</li>
+            <li>Provisioner</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Let's start</h2>
+    <p>
+        <ul>
+            <li>Choose a virtual machine as base from <a href="http://www.vagrantcloud.com" target="_blank">vagrantcloud.com</a> or create yours</li>
+            <li>$ vagrant init (name of selected virtual machine)</li>
+            <li>$ vagrant up</li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <section>
+        <img src="/images/109f7_funny-pictures-cat-finished-rubiks-cube.jpg" width="90%" height="90%">
+    </section>
+    <section>
+        <h2>Demo time</h2>
+        <p>
+            code can be found on: <a href="https://github.com/javiyt/vagrantdemo">github.com/javiyt/vagrantdemo</a>
+        </p>
+    </section>
+
+</section>
+
+<section>
+    <h2>Useful links</h2>
+    <p>
+        <ul>
+            <li><a href="http://www.vagrantup.com" target="_blank">vagrantup.com</a></li>
+            <li><a href="http://www.vagrantcloud.com" target="_blank">vagrantcloud.com</a></li>
+            <li><a href="http://www.example42.com/" target="_blank">example42.com</a></li>
+            <li><a href="https://puphpet.com/" target="_blank">puphpet.com</a></li>
+            <li><a href="https://github.com/mitchellh/vagrant" target="_blank">github.com/mitchellh/vagrant</a></li>
+            <li><a href="http://blog.codeboutique.com/post/creating-debian-squeeze-box-for-vagrant" target="_blank">Creating Debian Squeeze Box for Vagrant</a></li>
+            <li><a href="http://www.packer.io" target="_blank">packer.io</a></li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Books</h2>
+    <p>
+        <ul>
+            <li><a href="http://www.amazon.com/Vagrant-Up-Running-Mitchell-Hashimoto/dp/1449335837/ref=sr_1_1?s=books&ie=UTF8&qid=1427115346&sr=1-1&keywords=vagrant+up+and+running" target="_blank">Vagrant up and running</a></li>
+            <li><a href="http://www.amazon.com/Creating-Development-Environments-Vagrant-Second/dp/1784397024/ref=sr_1_2?s=books&ie=UTF8&qid=1427115386&sr=1-2&keywords=Creating+Development+Environments+with+Vagrant" target="_blank">Creating development environments with Vagrant</a></li>
+        </ul>
+    </p>
+</section>
+
+<section>
+    <h2>Questions</h2>
+    <img src="/images/cat_question.jpg" width="50%" height="50%">
+</section>

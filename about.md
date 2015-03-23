@@ -33,7 +33,4 @@ A place to include any other types of information that you'd like to include abo
     <li>
         <a class="slide-entry" href="https://docs.google.com/presentation/d/1eKa94I7M376SVg3GB9gVEWPSexAn14yGKwZdqEDI3z0/edit?usp=sharing">Node.js for PHP developers</a> code can be found at <a href="https://bitbucket.org/meth/workshop_nodejs">bitbucket.org/meth/workshop_nodejs</a>
     </li>
-    <li>
-        <a class="slide-entry" href="https://docs.google.com/presentation/d/1ehGa8kJfvjaToAtng9GrxkBDqINxfksrJjMS0WMa6vA/edit?usp=sharing">Vagrant: Virtualizing your development</a>
-    </li>
 </ul>
