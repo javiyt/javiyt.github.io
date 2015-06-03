@@ -3,7 +3,7 @@ exec {
       command => '/usr/bin/apt-get update'
 }
 
-$base_packages = ['build-essential', 'git', 'ruby1.9.3', 'rubygems', 'curl']
+$base_packages = ['build-essential', 'git', 'ruby', 'rubygems', 'curl']
 package { $base_packages:
   ensure  => installed,
   require => Exec['apt_update'],
@@ -22,10 +22,21 @@ package {
     require => Exec['install_node'],
 }
 
-package {
+rvm_gem {
   'github-pages':
-    ensure      => installed,
-    provider    => 'gem',
-    require     => Package['nodejs'],
-    install_options => ['--no-ri', '--no-rdoc'],
+    name         => 'github-pages',
+    ruby_version => 'ruby-2.0',
+    ensure       => latest,
+    require      => [Rvm_system_ruby['ruby-2.0'], Package['nodejs']];
+}
+
+class {
+  '::rvm':
+    require => Package['ruby']
+}
+
+rvm_system_ruby {
+  'ruby-2.0':
+    ensure      => 'present',
+    default_use => true
 }
