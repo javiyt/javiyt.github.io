@@ -21,12 +21,17 @@ reveal:
             <li>What's big data? The three Vs</li>
             <li>Big Data evolution</li>
             <li>What's Hadoop?</li>
+            <li>Hadoop Ecosystem</li>
+            <li>Spark</li>
+            <li>Real Time</li>
+            <li>More to come</li>
         </ul>
     </p>
 </section>
 
 <section>
-    <h2>What's big data? The three Vs</h2>
+    <h2>What's big data?</h2>
+    <h3>The three Vs</h3>
     <img src="/images/hadoop/3v.png" width="65%" height="65%">
 </section>
 
@@ -41,18 +46,19 @@ reveal:
         <ul>
             <li>Framework for storage and large-scale processing data</li>
             <li>
-                Four modules
+                Four modules/layers
                 <ul>
                     <li>Hadoop Common</li>
                     <li>HDFS</li>
-                    <li>YARN</li>
                     <li>MapReduce</li>
+                    <li>YARN</li>
                 </ul>
             </li>
         </ul>
     </section>
     <section>
-        <h2>Hadoop Common</h2>
+        <h2>What's Hadoop?</h2>
+        <h3>Hadoop Common</h3>
         <ul>
             <li>Basic Java scripts to start Hadoop</li>
             <li>Require JRE 1.6</li>
@@ -60,7 +66,8 @@ reveal:
         </ul>
     </section>
     <section>
-        <h2>HDFS</h2>
+        <h2>What's Hadoop?</h2>
+        <h3>HDFS</h3>
         <ul>
             <li>Distributed file system through a cluster</li>
             <li>Can store files from GB to TB</li>
@@ -69,96 +76,114 @@ reveal:
         </ul>
     </section>
     <section>
-        <h2>YARN</h2>
-        <ul>
-            <li>Resource manager</li>
-            <li>Responsible of distributing user's apps or MR between nodes</li>
-        </ul>
+        <h2>What's Hadoop?</h2>
+        <h3>MapReduce</h3>
+        <img src="/images/hadoop/map_reduce_simplified.jpg" width="65%" height="65%">
     </section>
     <section>
-        <h2>MapReduce</h2>
+        <h2>What's Hadoop?</h2>
+        <h3>MapReduce</h3>
         <ul>
             <li>JobTracker + TaskTracker</li>
             <li>Separate JVM processess</li>
             <li>Not load balanced, nearest data node</li>
         </ul>
     </section>
-</section>
-
-<section>
-    <h2>Hive <img src="/images/hadoop/Apache_Hive_logo.jpg" width="100px"></h2>
-    <ul>
-        <li>Database using Hadoop as store</li>
-        <li>HiveQL</li>
-        <li>Can handle compressed data: gzip, bzip2, LZO, ...</li>
-        <li>RDBMS for storing metadata</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Impala <img src="/images/hadoop/impala-logo.png" width="100px"></h2>
-    <ul>
-        <li>Run SQL queries on top HDFS/Hbase</li>
-        <li>Support Hadoop file formats: Parquet, LZO, ..</li>
-        <li>Faster than Hive</li>
-        <li>Share metastore with Hive</li>
-    </ul>
-</section>
-
-<section>
-    <h2>HBase <img src="/images/hadoop/HBase_Logo.png" width="100px"></h2>
-    <ul>
-        <li>NoSQL database</li>
-        <li>Columnar storage</li>
-        <li>HDFS storage layer</li>
-        <li>REST, Avro, Thrift</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Oozie <img src="/images/hadoop/oozie.png" width="100px"></h2>
-    <ul>
-        <li>Workflow scheduler</li>
-        <li>
-            Can execute:
-            <ul>
-                <li>MapReduce operations</li>
-                <li>HDFS operations</li>
-                <li>…</li>
-            </ul>
-        </li>
-        <li>XML</li>
-    </ul>
-</section>
-
-<section>
-    <h2>Sqoop <img src="/images/hadoop/sqoop-logo.png" width="100px"></h2>
-    <ul>
-        <li>Connect relational databases to Hadoop</li>
-        <li>
-            Import/export to/from:
-            <ul>
-                <li>RDBMS: MySQL, PostgreSQL, SQL Server, Oracle, ...</li>
-                <li>Hive</li>
-                <li>HBase</li>
-            </ul>
-        </li>
-    </ul>
-</section>
-
-<section>
-    <h2>Pig <img src="/images/hadoop/pig-logo.gif" width="100px"></h2>
-    <ul>
-        <li>High level platform to create MR</li>
-        <li>Pig Latin</li>
-        <li>ETL</li>
-        <li>Store data at any point while executing</li>
-    </ul>
+    <section>
+        <h2>What's Hadoop?</h2>
+        <h3>YARN</h3>
+        <ul>
+            <li>Resource manager</li>
+            <li>Responsible of distributing user's apps or MR between nodes</li>
+        </ul>
+    </section>
+    <section>
+        <h2>What's Hadoop?</h2>
+        <img src="/images/hadoop/hadoop_layers_evolution.png" width="65%" height="65%">
+    </section>
 </section>
 
 <section>
     <section>
-        <h2>HUE <img src="/images/hadoop/Hue_official_logo.png" width="100px"></h2>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>Hive <img src="/images/hadoop/Apache_Hive_logo.jpg" width="100px"></h3>
+        <ul>
+            <li>Database using Hadoop as store</li>
+            <li>HiveQL</li>
+            <li>Can handle compressed data: gzip, bzip2, LZO, ...</li>
+            <li>RDBMS for storing metadata</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>Impala <img src="/images/hadoop/impala-logo.png" width="100px"></h3>
+        <ul>
+            <li>Run SQL queries on top HDFS/Hbase</li>
+            <li>Support Hadoop file formats: Parquet, LZO, ..</li>
+            <li>Faster than Hive</li>
+            <li>Share metastore with Hive</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>HBase <img src="/images/hadoop/HBase_Logo.png" width="100px"></h3>
+        <ul>
+            <li>NoSQL database</li>
+            <li>Columnar storage</li>
+            <li>HDFS storage layer</li>
+            <li>REST, Avro, Thrift</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>Oozie <img src="/images/hadoop/oozie.png" width="100px"></h3>
+        <ul>
+            <li>Workflow scheduler</li>
+            <li>
+                Can execute:
+                <ul>
+                    <li>MapReduce operations</li>
+                    <li>HDFS operations</li>
+                    <li>…</li>
+                </ul>
+            </li>
+            <li>XML</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>Sqoop <img src="/images/hadoop/sqoop-logo.png" width="100px"></h3>
+        <ul>
+            <li>Connect relational databases to Hadoop</li>
+            <li>
+                Import/export to/from:
+                <ul>
+                    <li>RDBMS: MySQL, PostgreSQL, SQL Server, Oracle, ...</li>
+                    <li>Hive</li>
+                    <li>HBase</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>Pig <img src="/images/hadoop/pig-logo.gif" width="100px"></h3>
+        <ul>
+            <li>High level platform to create MR</li>
+            <li>Pig Latin</li>
+            <li>ETL</li>
+            <li>Store data at any point while executing</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>HUE <img src="/images/hadoop/Hue_official_logo.png" width="100px"></h3>
         <ul>
             <li>Web interface to access Hadoop resources</li>
             <li>
@@ -174,18 +199,44 @@ reveal:
             </li>
         </ul>
     </section>
+
     <section>
-        <h2>HUE <img src="/images/hadoop/Hue_official_logo.png" width="100px"></h2>
+        <h2>Hadoop Ecosystem</h2>
+        <h3>HUE <img src="/images/hadoop/Hue_official_logo.png" width="100px"></h3>
         <img src="/images/hadoop/Hue_3.6_interface.png" width="75%" height="75%">
+    </section>
+
+</section>
+
+<section>
+    <h2>Spark <img src="/images/hadoop/spark-logo.png" width="100px"></h2>
+
+</section>
+
+<section>
+    <section>
+        <h2>Real Time</h2>
+        <h3>Storm <img src="/images/hadoop/storm-small.png" width="100px"></h3>
+        <ul>
+            <li>Process data in real time</li>
+            <li>Topology: spouts/bolts</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Real Time</h2>
+        <h3>Heron</h3>
     </section>
 </section>
 
 <section>
-    <h2>Storm <img src="/images/hadoop/storm-small.png" width="100px"></h2>
-    <ul>
-        <li>Process data in real time</li>
-        <li>Topology: spouts/bolts</li>
-    </ul>
+    <section>
+        <h2>More to come</h2>
+        <h3>Lambda</h3>
+    </section>
+    <section>
+        <h2>More to come</h2>
+        <h3>Summing Bird</h3>
+    </section>
 </section>
 
 <section>

@@ -15,5 +15,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      puppet.manifest_file  = "default.pp"
   end
 
-  config.vm.provision "shell", path: "puppet/manifests/jekyll_server.sh", run: "always"
+  config.vm.provision "shell", path: "puppet/manifests/jekyll_server.sh", run: "always", privileged: false
 end
