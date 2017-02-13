@@ -12,6 +12,13 @@ permalink: /projects/
 
 [Bored at Work](https://play.google.com/store/apps/details?id=yt.javi.boredatwork)
 
+## Java Projects
+[HHPnet Core](https://github.com/HHPnet/jcore)
+HipHop-Producciones.net domain core logic written on Java and published on [JitPack](https://jitpack.io/#HHPnet/jcore)
+
+[HHPnet API](https://github.com/HHPnet/api)
+HipHop-Produccione.net API written using Spring Framework
+
 ## PHP Projects
 
 [HipHop-Producciones.net](http://www.hiphop-producciones.net)
@@ -24,6 +31,8 @@ Package to install via composer. It is the core of a new project I'm working on,
 Based on [YAF framework](https://github.com/laruence/php-yaf) I have created an extension to deal with the framework easily, mostly you can find here an extension to build ajax controllers, so you can send to the user the view in json format. Sadly it is not documented.
 
 ## Javascript Projects
+[HHPnet Frontend](https://github.com/HHPnet/frontend)
+SPA written using ReactJS
 
 [Backbone Workshop](https://github.com/javiyt/BBWorkshop)
 It is not a project itself, it should be used only for educational purposes, I created a backbone application for a workshop where people learned to deal with backbone.
