@@ -1,0 +1,552 @@
+---
+title: Optionals and Streams
+description: do more with less code
+reveal:
+  theme: solarized
+  progress: true
+  history: true
+---
+<section>
+  <h1>Optionals and Streams</h1>
+  <h3>do more with less code</h3>
+  <p>
+    <small>Created by <a href="http://javi.yt">Javi M.</a> / <a href="http://twitter.com/javiyt">@javiyt</a></small>
+  </p>
+</section>
+
+<section>
+  <h2>Agenda</h2>
+  <p>
+    <ul>
+      <li>Optional</li>
+      <li>Streams</li>
+    </ul>
+  </p>
+</section>
+
+<section>
+  <section>
+    <h2>Optional</h2>
+    <h3>Goodbye NullPointerException</h3>
+    <pre>
+      <code>
+      Optional&lt;String&gt; myVar = Optional.of("testing optionals");
+      if (myVar.isPresent()) {
+        String testing = myVar.get();
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional</h2>
+    <h3>Goodbye NullPointerException (Better way)</h3>
+    <pre>
+      <code>
+      Optional&lt;String&gt; myVar = Optional.of("testing optionals");
+
+      String testing = myVar.orElse("default value");
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional</h2>
+    <h3>Creating objects</h3>
+    <pre>
+      <code>
+      Optional&lt;String&gt; myEmptyVar = Optional.empty();
+      Optional&lt;String&gt; otherEmtpyVar = Optional.ofNullable(null);
+      Optional&lt;String&gt; myVar = Optional.of("my value");
+      Optional&lt;String&gt; otherVar = Optional.ofNullable("my value");
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Check value presence</h3>
+    <pre>
+      <code>
+      public interface User {
+        Optional&lt;UUID&gt; getId();
+      }
+
+      public class EditUserProfile {
+        public void editUser(User user) throws ForbiddenException {
+          if (user.getId().isPresent()) {
+          // do stuff
+          }
+
+          user.getId().ifPresent(user ->
+            //do stuff
+          );
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Return default or execute Supplier</h3>
+    <pre>
+      <code>
+      public interface User {
+        Optional&lt;UUID&gt; getId();
+      }
+
+      public class EditUserProfile {
+        public void editUser(User user) throws ForbiddenException {
+          UUID userId = user.getId().orElse(DEFAULT_USER_ID);
+          UUID userId = user.getId().orElseGet(() -> UUID.randomUUID());
+
+          // do stuff
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Throw exceptions</h3>
+    <pre>
+      <code>
+      public interface User {
+        Optional&lt;UUID&gt; getId();
+      }
+
+      public class EditUserProfile {
+        public void editUser(User user) throws ForbiddenException {
+          UUID userId = user.getId()
+                      .orElseThrow(ForbiddenException::new);
+
+          // do stuff
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Transform values</h3>
+    <pre>
+      <code>
+      public interface User {
+        Optional&lt;String&gt; getId();
+      }
+
+      public class EditUserProfile {
+        public void editUser(User user) throws ForbiddenException {
+          UUID userId = user.getId()
+                    .map(UUID::fromString)
+                    .orElseThrow(ForbiddenException::new);
+
+          // do stuff
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Filter values</h3>
+    <pre>
+      <code>
+      public interface User {
+        Optional&lt;String&gt; getId();
+      }
+
+      public class EditUserProfile {
+        public void editUser(User user) throws ForbiddenException {
+          UUID userId = user.getId()
+                      .filter(id -> id.equals(FIXED_USER_ID))
+                      .orElseThrow(ForbiddenException::new);
+          // do stuff
+        }
+      }
+      </code>
+    </pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Streams</h2>
+    <h3>What is it?</h3>
+    <ul>
+      <li>Sequence of elements</li>
+      <li>Lazily constructed</li>
+      <li>Can be computed</li>
+      <li>Automatic iteration</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>What is it?</h3>
+    <ul>
+      <li>Source: Collections, Arrays or I/O resources</li>
+      <li>Pipelined</li>
+      <li>Intermediate and terminal operations</li>
+      <li>Parallel (parallelStream) or sequential execution (stream)</li>
+      <li>Support: filter, map, limit, reduce, find, macth, ...</li>
+    </ul>
+  </section>
+
+  <section>
+      <h2>Streams</h2>
+      <h3>Filtering: Loop</h3>
+      <pre>
+        <code>
+        public List&lt;Integer&gt; filterList(List&lt;Integer&gt; integers) {
+          List&lt;Integer&gt; filtered = new ArrayList&lt;&gt;();
+          for (Integer value : integers) {
+            if (value &lt;= 2) {
+              filtered.add(value);
+            }
+          }
+
+          return filtered;
+        }
+        </code>
+      </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Filtering: Streams</h3>
+    <pre>
+      <code>
+      public List&lt;Integer&gt; filterList(List&lt;Integer&gt; integers) {
+        return integers.stream()
+                            .filter(i -> i &lt;= 2)
+                            .collect(toList());
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+      <h2>Streams</h2>
+      <h3>Distinct: Loop</h3>
+      <pre>
+        <code>
+        public List&lt;Integer&gt; distinctList(List&lt;Integer&gt; integers) {
+          List&lt;Integer&gt; filtered = new ArrayList&lt;&gt;();
+          for (Integer value : integers) {
+            if (!filtered.contains(value)) {
+              filtered.add(value);
+            }
+          }
+
+          return filtered;
+        }
+        </code>
+      </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Distinct: Streams</h3>
+    <pre>
+      <code>
+      public List&lt;Integer&gt; distinctList(List&lt;Integer&gt; integers) {
+        return integers.stream()
+                            .distinct()
+                            .collect(toList());
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Matching</h3>
+    <pre>
+      <code>
+          boolean match = integers.stream()
+                                .anyMatch(i -> i == 2);
+
+          boolean match = integers.stream()
+                                .allMatch(i -> i == 2);
+
+          boolean match = integers.stream()
+                                .noneMatch(i -> i == 2);
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Find</h3>
+    <pre>
+      <code>
+        Optional&lt;Integer&gt; any = integers.stream().findAny();
+        Optional&lt;Integer&gt; first = integers.stream().findFirst();
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Sorting: Comparator</h3>
+    <pre>
+      <code>
+      public interface User {
+        Date getCreatedAt();
+      }
+
+      public class GetUsers {
+        public List&lt;User&gt; getOrderedByCreatedAt(List&lt;User&gt; users) {
+          Collections.sort(users, new Comparator&lt;User&gt;() {
+            @Override
+            public int compare(User u1, User u2) {
+              return u1.getCreatedAt().compareTo(u2.getCreatedAt());
+            }
+          });
+
+          return users;
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Sorting: Streams</h3>
+    <pre>
+      <code>
+        public interface User {
+          Date getCreatedAt();
+        }
+
+        public class GetUsers {
+          public List&lt;User&gt; getOrderedByCreatedAt(List&lt;User&gt; users) {
+            return users.stream()
+                    .sorted((u1, u2) ->
+                            u1.getCreatedAt()
+                            .compareTo(u2.getCreatedAt())
+                    ).collect(toList());
+          }
+        }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Transforming: Loop</h3>
+    <pre>
+      <code>
+      public interface User {
+        Date getCreatedAt();
+      }
+
+      public class GetUsers {
+        public List&lt;Date&gt; getCreationDate(List&lt;User&gt; users) {
+          List&lt;Date&gt; dates = new ArrayList&lt;&gt;();
+          for (User user: users) {
+            dates.add(user.getCreatedAt());
+          }
+
+          return dates;
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Transforming: Streams</h3>
+    <pre>
+      <code>
+      public interface User {
+        Date getCreatedAt();
+      }
+
+      public class GetUsers {
+        public List&lt;Date&gt; getCreationDate(List&lt;User&gt; users) {
+          return users.stream()
+                  .map(User::getCreatedAt)
+                  .collect(toList());
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Transforming: more...</h3>
+    <ul>
+      <li>mapToDouble</li>
+      <li>mapToInt</li>
+      <li>mapToLong</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Reduction: Loop</h3>
+    <pre>
+      <code>
+      public interface User {
+        Date getCreatedAt();
+      }
+
+      public class GetUsers {
+        public long getDateSum(List&lt;User&gt; users) {
+          long alldates = 0;
+          for (User user: users) {
+            alldates += user.getCreatedAt().getTime();
+          }
+
+          return alldates;
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Reduction: Streams</h3>
+    <pre>
+      <code>
+      public interface User {
+        Date getCreatedAt();
+      }
+
+      public class GetUsers {
+        public long getDateSum(List&lt;User&gt; users) {
+          return users.stream().map(user ->
+            user.getCreatedAt().getTime()
+          ).reduce(0L, ((integer, date) -> integer + date));
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Reduction: more...</h3>
+    <ul>
+      <li>average</li>
+      <li>sum</li>
+      <li>min</li>
+      <li>max</li>
+      <li>count</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Collecting</h3>
+    <ul>
+      <li>toList</li>
+      <li>toMap</li>
+      <li>toSet</li>
+      <li>joining</li>
+      <li>groupingBy</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Colleting: joining example</h3>
+    <pre>
+      <code>
+      public interface User {
+        String getUserName();
+      }
+
+      public class GetUsers {
+        public String getUsersJoined(List&lt;User&gt; users) {
+          String usersJoined = "";
+          for (User user: users) {
+            usersJoined += user.getUserName() + ", ";
+          }
+
+          return usersJoined;
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Colleting: joining example</h3>
+    <pre>
+      <code>
+      public interface User {
+        String getUserName();
+      }
+
+      public class GetUsers {
+        public String getUsersJoined(List&lt;User&gt; users) {
+          return users.stream()
+                    .map(User::getUserName)
+                    .collect(joining(", "));
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Colleting: groupingBy example</h3>
+    <pre>
+      <code>
+      public Map&lt;Date,List&lt;User&gt;&gt; getUsersByCreationDate(List&lt;User&gt; users) {
+        Map&lt;Date,List&lt;User&gt;&gt; grouped = new HashMap&lt;&gt;();
+        for (User user : users) {
+          if (!grouped.containsKey(user.getCreatedAt())) {
+            grouped.put(user.getCreatedAt(), new ArrayList&lt;&gt;() {
+              {
+                add(user);
+              }
+            });
+          } else {
+            grouped.get(user.getCreatedAt()).add(user);
+          }
+        }
+
+        return grouped;
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Colleting: groupingBy example</h3>
+    <pre>
+      <code>
+      public Map&lt;Date,List&lt;User&gt;&gt; getUsersByCreationDate(List&lt;User&gt; users) {
+        return users.stream().collect(groupingBy(User::getCreatedAt));
+      }
+      </code>
+    </pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <h2>Questions</h2>
+    <img src="/images/homer-thinking.jpg" width="35%" height="35%">
+  </section>
+
+  <section>
+    <img src="/images/thanks_coming.jpg">
+  </section>
+</section>
