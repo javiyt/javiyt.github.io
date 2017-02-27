@@ -224,8 +224,8 @@ reveal:
       <code>
       public List&lt;Integer&gt; filterList(List&lt;Integer&gt; integers) {
         return integers.stream()
-                            .filter(i -> i &lt;= 2)
-                            .collect(toList());
+                          .filter(i -> i &lt;= 2)
+                          .collect(toList());
       }
       </code>
     </pre>
@@ -384,6 +384,58 @@ reveal:
 
   <section>
     <h2>Streams</h2>
+    <h3>Transforming: Loop</h3>
+    <pre>
+      <code>
+      public interface User {
+        User addLanguage(String language);
+
+        String getLanguages();
+      }
+
+      public class GetUsers {
+        public List&lt;String&gt; getUsersLanguages(List&lt;User&gt; users) {
+          List&lt;String&gt; languages = new ArrayList&lt;&gt;();
+          for (User user: users) {
+            for (String language: user.getLanguages()) {
+              if (!languages.contains(language)) {
+                languages.add(language);
+              }
+            }
+          }
+
+          return languages;
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
+    <h3>Transforming: Streams</h3>
+    <pre>
+      <code>
+      public interface User {
+        User addLanguage(String language);
+
+        String getLanguages();
+      }
+
+      public class GetUsers {
+        public List&lt;String&gt; getUsersLanguages(List&lt;User&gt; users) {
+          return users.stream()
+                  .map(User::getLanguages)
+                  .flatMap(l -> l.stream())
+                  .collect(toList());
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Streams</h2>
     <h3>Transforming: more...</h3>
     <ul>
       <li>mapToDouble</li>
@@ -398,17 +450,17 @@ reveal:
     <pre>
       <code>
       public interface User {
-        Date getCreatedAt();
+        Integer getPoints();
       }
 
       public class GetUsers {
-        public long getDateSum(List&lt;User&gt; users) {
-          long alldates = 0;
+        public long getPointsSum(List&lt;User&gt; users) {
+          long points = 0;
           for (User user: users) {
-            alldates += user.getCreatedAt().getTime();
+            points += user.getPoints();
           }
 
-          return alldates;
+          return points;
         }
       }
       </code>
@@ -421,14 +473,14 @@ reveal:
     <pre>
       <code>
       public interface User {
-        Date getCreatedAt();
+        Integer getPoints();
       }
 
       public class GetUsers {
-        public long getDateSum(List&lt;User&gt; users) {
-          return users.stream().map(user ->
-            user.getCreatedAt().getTime()
-          ).reduce(0L, ((integer, date) -> integer + date));
+        public long getPointsSum(List&lt;User&gt; users) {
+          return users.stream()
+            .map(user -> user.getPoints())
+            .reduce(0L, ((integer, points) -> integer + points));
         }
       }
       </code>
