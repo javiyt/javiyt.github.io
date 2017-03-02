@@ -160,7 +160,7 @@ reveal:
 
   <section>
     <h2>Optional: What can I do with them?</h2>
-    <h3>Transform values</h3>
+    <h3>Transform values: Map</h3>
     <pre>
       <code>
       public interface User {
@@ -182,36 +182,7 @@ reveal:
 
   <section>
     <h2>Optional: What can I do with them?</h2>
-    <h3>Transform values (without Optional)</h3>
-    <pre>
-      <code>
-      public interface UserProfile {
-        String getUserName();
-      }
-
-      public interface User {
-        Optional&lt;UserProfile&gt; getProfile();
-      }
-
-      public class GetUserProfile {
-        public String getUserName(User user) throws ForbiddenException {
-          String userName = DEFAULT_USERNAME;
-
-          if (Objects.nonNull(user.getProfile()) &amp;&amp; Objects.nonNull(user.getProfile().getUserName())) {
-            userName = user.getProfile().getUserName();
-          }
-
-          return userName;
-        }
-      }
-      </code>
-    </pre>
-  </section>
-
-
-  <section>
-    <h2>Optional: What can I do with them?</h2>
-    <h3>Transform values</h3>
+    <h3>Transform values: flatMap</h3>
     <pre>
       <code>
       public interface UserProfile {
@@ -224,11 +195,83 @@ reveal:
 
       public class GetUserProfile {
         private static final String DEFAULT_USERNAME = "default user";
-        
+
         public String getUserName(User user) throws ForbiddenException {
-          return Optional.ofNullable(user).flatMap(User::getProfile)
+          return Optional.ofNullable(user)
+                      .flatMap(User::getProfile)
                       .map(UserProfile::getUserName)
                       .orElse(DEFAULT_USERNAME);
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Transform values: flatMap vs Map</h3>
+    <pre>
+      <code>
+      Optional&lt;User&gt; user1 = Optional.of(user);
+      Optional&lt;Optional&lt;UserProfile&gt;&gt; userProfile = user1.map(User::getProfile);
+      Optional&lt;UserProfile&gt; userProfile1 = user1.flatMap(User::getProfile);
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Transform values: flatMap vs Map</h3>
+    <pre>
+      <code>
+      public interface UserProfile {
+        String getUserName();
+      }
+
+      public interface User {
+        Optional&lt;UserProfile&gt; getProfile();
+      }
+
+      public class GetUserProfile {
+        private static final String DEFAULT_USERNAME = "default user";
+
+        public String getUserName(User user) throws ForbiddenException {
+          return Optional.ofNullable(user)
+                      .map(User::getProfile)
+                      .map(u -> u.map(UserProfile::getUserName).orElse(DEFAULT_USERNAME))
+                      .orElse(DEFAULT_USERNAME);
+        }
+      }
+      </code>
+    </pre>
+  </section>
+
+  <section>
+    <h2>Optional: What can I do with them?</h2>
+    <h3>Transform values (without Optional)</h3>
+    <pre>
+      <code>
+      public interface UserProfile {
+        String getUserName();
+      }
+
+      public interface User {
+        UserProfile getProfile();
+      }
+
+      public class GetUserProfile {
+        public String getUserName(User user) throws ForbiddenException {
+          String userName = DEFAULT_USERNAME;
+
+          if (
+            Objects.nonNull(user)
+            &amp;&amp; Objects.nonNull(user.getProfile())
+            &amp;&amp; Objects.nonNull(user.getProfile().getUserName())
+          ) {
+            userName = user.getProfile().getUserName();
+          }
+
+          return userName;
         }
       }
       </code>
