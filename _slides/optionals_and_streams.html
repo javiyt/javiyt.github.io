@@ -223,9 +223,11 @@ reveal:
       }
 
       public class GetUserProfile {
+        private static final String DEFAULT_USERNAME = "default user";
+        
         public String getUserName(User user) throws ForbiddenException {
-          return user.flatMap(User::getProfile)
-                      .map(UserProfile::getUsername)
+          return Optional.ofNullable(user).flatMap(User::getProfile)
+                      .map(UserProfile::getUserName)
                       .orElse(DEFAULT_USERNAME);
         }
       }
