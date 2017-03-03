@@ -98,16 +98,22 @@ reveal:
         Optional&lt;UUID&gt; getId();
       }
 
+      public interface UserRepository {
+        User save(User user);
+      }
+
       public class EditUserProfile {
+        private final UserRepository repository;
+
         public void editUser(User user) throws ForbiddenException {
           if (user.getId().isPresent()) {
-          // do stuff
+            repository.save(user);
           }
         }
 
         public void saveUser(User user) throws ForbiddenException {
           user.getId().ifPresent(user ->
-            //do stuff
+            repository.save(user);
           );
         }
       }
@@ -264,9 +270,9 @@ reveal:
           String userName = DEFAULT_USERNAME;
 
           if (
-            Objects.nonNull(user)
-            &amp;&amp; Objects.nonNull(user.getProfile())
-            &amp;&amp; Objects.nonNull(user.getProfile().getUserName())
+            user != null
+            &amp;&amp; user.getProfile() != null
+            &amp;&amp; user.getProfile().getUserName() != null
           ) {
             userName = user.getProfile().getUserName();
           }
